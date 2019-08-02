@@ -1,0 +1,33 @@
+apiVersion: v1
+kind: ConfigMap
+
+metadata:
+  name: crawler-config
+  namespace: tetragrama
+data:
+  MYSQL_ROOT_PASSWORD: rootz0r
+  SPRING_DATASOURCE_URL: jdbc:mysql://crawler-mysql-svc:3306/crawler?useSSL=FALSE&allowPublicKeyRetrieval=true&useUnicode=yes&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
+  SPRING_DATASOURCE_USERNAME: root
+  SPRING_DATASOURCE_PASSWORD: rootz0r
+  LKSSAIS_REPOSITORY_HOST: repository-svc
+  LKSSAIS_REPOSITORY_PORT: '7001'
+---
+apiVersion: v1
+kind: ConfigMap
+
+metadata:
+  name: mongo-config
+  namespace: tetragrama
+data:
+  MONGO_INITDB_ROOT_USERNAME: root
+  MONGO_INITDB_ROOT_PASSWORD: root
+---
+apiVersion: v1
+kind: ConfigMap
+
+metadata:
+  name: crawler-mysql-initdb-config
+  namespace: tetragrama
+data:
+  initdb.sql: |
+    CREATE DATABASE crawler CHARACTER SET utf8mb4 COLLATE utf8mb4_lithuanian_ci;

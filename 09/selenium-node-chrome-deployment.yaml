@@ -1,0 +1,32 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+
+metadata:
+  name: selenium-node-chrome
+  namespace: tetragrama
+  labels:
+    app: selenium-node-chrome
+spec:
+  replicas: 4
+  revisionHistoryLimit: 0
+  selector:
+    matchLabels:
+      app: selenium-node-chrome
+  template:
+    metadata:
+      labels:
+        app: selenium-node-chrome
+    spec:
+      containers:
+      - name: selenium-node-chrome
+        image: selenium/node-chrome:3.141.59-iron
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 5900
+        env:
+        - name: HUB_HOST
+          value: "selenium-hub-svc"
+        - name: HUB_PORT
+          value: "4444"
+      nodeSelector:
+        nodetype: apps

@@ -1,0 +1,19 @@
+apiVersion: v1
+
+kind: PersistentVolumeClaim
+
+metadata:
+  name: repository-data-volume
+  namespace: tetragrama
+
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 500Gi
+  storageClassName: manual
+  volumeName: "mysql-pv001"
+  selector:
+    matchLabels:
+      app: repository-mysql

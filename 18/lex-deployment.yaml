@@ -1,0 +1,30 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+
+metadata:
+  name: lex-deployment
+  namespace: tetragrama
+  labels:
+    app: lex
+spec:
+  replicas: 4
+  revisionHistoryLimit: 0
+  selector:
+    matchLabels:
+      app: lex
+  template:
+    metadata:
+      labels:
+        app: lex
+    spec:
+      containers:
+      - name: lex
+        image: docker.tetragrama.com/lex
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8080
+          name: http
+      nodeSelector:
+        nodetype: apps
+      imagePullSecrets:
+      - name: tetragrama-cred

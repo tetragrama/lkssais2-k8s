@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: PersistentVolume
+
+metadata:
+  name: mysql-pv002
+  namespace: tetragrama
+spec:
+  capacity:
+    storage: 150Gi
+  accessModes:
+  - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Recycle
+  storageClassName: manual
+  hostPath:
+    path: "/data/tetragrama/crawler"
+    type: DirectoryOrCreate

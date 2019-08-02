@@ -1,0 +1,30 @@
+apiVersion: extensions/v1beta1
+
+kind: Deployment
+
+metadata:
+  name: ner
+  namespace: tetragrama
+
+spec:
+  replicas: 4
+  revisionHistoryLimit: 0
+  selector:
+    matchLabels:
+      app: ner
+  template:
+    metadata:
+      labels:
+        app: ner
+    spec:
+      containers:
+        - name: ner
+          image: docker.tetragrama.com/ner
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
+              name: ner
+      nodeSelector:
+        nodetype: apps
+      imagePullSecrets:
+        - name: tetragrama-cred

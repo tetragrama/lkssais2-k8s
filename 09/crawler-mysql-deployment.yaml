@@ -1,0 +1,47 @@
+apiVersion:   extensions/v1beta1
+kind: Deployment
+
+metadata:
+  name: crawler-mysql-deployment
+  namespace: tetragrama
+  labels:
+    app: crawler
+spec:
+  selector:
+    matchLabels:
+      app: crawler
+      tier: mysql
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: crawler
+        tier: mysql
+    spec:
+      containers:
+      - name: mysql
+        image: mysql:5.6
+        ports:
+        - containerPort: 3306
+          name: mysql
+        volumeMounts:
+        - name: mysql-initdb
+          mountPath: /docker-entrypoint-initdb.d
+        - name: mysql-crawler-data
+          mountPath: /var/lib/mysql
+        env:
+        - name: MYSQL_ROOT_PASSWORD
+          valueFrom:
+            configMapKeyRef:
+              name: crawler-config
+              key: MYSQL_ROOT_PASSWORD
+      nodeSelector:
+        nodetype: storage
+      volumes:
+      - name: mysql-initdb
+        configMap:
+          name: crawler-mysql-initdb-config
+      - name: mysql-crawler-data
+        persistentVolumeClaim:
+          claimName: crawler-data-volume

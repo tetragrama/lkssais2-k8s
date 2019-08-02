@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+
+metadata:
+  name: lex-svc
+  namespace: tetragrama
+spec:
+  selector:
+    app: lex
+  ports:
+  - port: 7000
+    targetPort: 8080

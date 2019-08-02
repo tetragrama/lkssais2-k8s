@@ -1,0 +1,18 @@
+apiVersion: v1
+
+kind: PersistentVolume
+
+metadata:
+  name: mysql-pv001
+  namespace: tetragrama
+
+spec:
+  capacity:
+    storage: 500Gi
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Recycle
+  storageClassName: manual
+  hostPath:
+    path: "/data/tetragrama/repository"
+    type: DirectoryOrCreate

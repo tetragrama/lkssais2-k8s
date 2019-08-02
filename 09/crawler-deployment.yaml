@@ -1,0 +1,56 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+
+metadata:
+  name: crawler-deployment
+  namespace: tetragrama
+  labels:
+    app: crawler
+spec:
+  replicas: 1
+  revisionHistoryLimit: 0
+  selector:
+    matchLabels:
+      app: crawler
+  template:
+    metadata:
+      labels:
+        app: crawler
+    spec:
+      containers:
+      - name: crawler
+        image: docker.tetragrama.com/crawler
+        imagePullPolicy: Always
+        env:
+        - name: SPRING_DATASOURCE_URL
+          valueFrom:
+            configMapKeyRef:
+              name: crawler-config
+              key: SPRING_DATASOURCE_URL
+        - name: SPRING_DATASOURCE_USERNAME
+          valueFrom:
+            configMapKeyRef:
+              name: crawler-config
+              key: SPRING_DATASOURCE_USERNAME
+        - name: SPRING_DATASOURCE_PASSWORD
+          valueFrom:
+            configMapKeyRef:
+              name: crawler-config
+              key: SPRING_DATASOURCE_PASSWORD
+        - name: LKSSAIS_REPOSITORY_HOST
+          valueFrom:
+            configMapKeyRef:
+              name: crawler-config
+              key: LKSSAIS_REPOSITORY_HOST
+        - name: LKSSAIS_REPOSITORY_PORT
+          valueFrom:
+            configMapKeyRef:
+              name: crawler-config
+              key: LKSSAIS_REPOSITORY_PORT
+        ports:
+        - containerPort: 2001
+          name: crawler
+      nodeSelector:
+        nodetype: apps
+      imagePullSecrets:
+      - name: tetragrama-cred
