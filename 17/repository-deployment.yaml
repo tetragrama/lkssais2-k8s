@@ -19,7 +19,7 @@ spec:
     spec:
       containers:
         - name: repository
-          image: docker.tetragrama.com/repository
+          image: <07-addr>
           imagePullPolicy: Always
           env:
             - name: SPRING_DATASOURCE_URL

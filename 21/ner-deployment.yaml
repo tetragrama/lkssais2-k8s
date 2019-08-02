@@ -19,7 +19,7 @@ spec:
     spec:
       containers:
         - name: ner
-          image: docker.tetragrama.com/ner
+          image: <21-addr>
           imagePullPolicy: Always
           ports:
             - containerPort: 8080
